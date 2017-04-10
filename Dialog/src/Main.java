@@ -22,7 +22,7 @@ import java.net.UnknownHostException;
 import java.awt.event.ActionEvent;
 
 public class Main extends JFrame implements Runnable {
-	
+	private static ObjectInputStream input1;
 	private static ObjectOutputStream output1;
 	private Socket connection;
 	private JFrame frmClient;
@@ -97,11 +97,18 @@ public class Main extends JFrame implements Runnable {
 	public void run() {
 		while(true){
 			 try {
-				connection= new Socket (InetAddress.getByName("192.168.43.236"),5678);
+				connection= new Socket (InetAddress.getByName("192.168.1.122"),5678);
 				output1=new ObjectOutputStream(connection.getOutputStream());
+				input1 = new ObjectInputStream (connection.getInputStream());
+				try {
+					JOptionPane.showMessageDialog(null, (String) input1.readObject());
+				} catch (HeadlessException e) {
+					
+				} catch (ClassNotFoundException e) {
 				
-				
+				}
 			}catch (IOException e) {
+				System.out.println("Ошибка ввода вывода 1 ");
 			}
 		}
 	 }
@@ -109,43 +116,38 @@ public class Main extends JFrame implements Runnable {
 			 try {
 				output1.flush();
 				} catch (IOException e) {
+					System.out.println("Ошибка ввода вывода 2 ");
 				}
 			 try {
 				output1.writeObject(obj);
 				} catch (IOException e) {
+					System.out.println("Ошибка ввода вывода 3 ");
 			}
 }
-		 public static class Server1  implements Runnable {
-				private static ServerSocket server;
-				private static Socket connection;
-				private static ObjectInputStream input1;
+		// public static class Server1  implements Runnable {
+				//private static ServerSocket server;
+			//	private static Socket connection;
+				//private static ObjectInputStream input1;
 			
 				
-				public void run() {
+			//	public void run() {
 					
 					
-					try {
-						server = new ServerSocket(5678, 19);
-						while(true){
-							connection= server.accept();
-							input1 = new ObjectInputStream(connection.getInputStream());
+				//	try {
+					//	server = new ServerSocket(5678, 19);
+					//	while(true){
+						//	connection= server.accept();
+						//	input1 = new ObjectInputStream(connection.getInputStream());
 							
-							try {
-								JOptionPane.showMessageDialog(null, (String)input1.readObject());
-							} catch (HeadlessException e) {
-							
-							} catch (ClassNotFoundException e) {
-							
-							}
-						
+					
 								
 							
-						}
-					} catch (IOException e) {
-						
-					}
+						//}
+				//	} catch (IOException e) {
+					//	System.out.println("Ошибка ввода вывода 4 ");
+				//	}
 					
 					
-	}
-		 }
+	//}
+		// }
 }
