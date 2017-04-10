@@ -15,7 +15,7 @@ public class Server  implements Runnable {
 	private static Socket connection;
 	private static ObjectInputStream input1;
 	private static ObjectOutputStream output1;
-	 static String a;
+	static String a;
 	
 	public void run() {
 	try{
